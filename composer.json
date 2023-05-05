@@ -1,0 +1,9 @@
+{
+    "name": "codelyir/codelyir",
+    "description": "A tool for beginner or student.",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "mpdf/mpdf": "^8.1"
+    }
+}
