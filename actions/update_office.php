@@ -27,7 +27,7 @@ if (isset($_POST['btn-update'])) {
             if($stmt->execute()){
                 set_message("<i class='fa fa-check'></i> Office Updated Successfully",  'success');
             } else {
-                set_message("<i class='fa fa-times'></i> Office Failed to Update Password" .$DB->error, 'danger');
+                set_message("<i class='fa fa-times'></i> Office Failed to Update" .$DB->error, 'danger');
             }
         }
     }

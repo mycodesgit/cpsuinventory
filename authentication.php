@@ -24,7 +24,7 @@
 			is assigned with a value.
 	*/
 
-	$restricted_pages[ 'Administrator' ]['access'] = [ "dashboard", "profile", "inventory", "add-inventory", "edit-inventory", "category", "logstatus", "classification", "edit-classification", "offices", "edit-office", "users", "edit-user" ];
+	$restricted_pages[ 'Administrator' ]['access'] = [ "dashboard", "profile", "inventory", "add-inventory", "edit-inventory", "category", "edit-category", "logstatus", "classification", "edit-classification", "offices", "edit-office", "users", "edit-user" ];
 	$restricted_pages[ 'Administrator' ][ 'default_page' ] = "dashboard";
 
 	$restricted_pages[ 'Supply Officer' ]['access'] = [ "dashboard", "profile", "inventory", "add-inventory", "edit-inventory", "category", "logstatus", "classification", "edit-classification", "offices", "edit-office" ];

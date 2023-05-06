@@ -31,11 +31,6 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <?php if (!empty($msg)): ?>
-                                <div class="alert <?php echo $msg_class ?>" role="alert">
-                                    <?php echo $msg; ?>
-                                </div>
-                            <?php endif; ?>
                             <h3 class="card-title">
                                 <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-category" style="background-color: #3c8dbc;">
                                     <i class="fas fa-plus"></i> Add New
@@ -43,9 +38,9 @@
                             </h3>
                         </div>
                         <!-- /.card-header -->
-
+                        <?= show_message(); ?>
                         <!-- Modal -->
-                        <?php include 'pages/modal/add-ict-category-modal.php';?>
+                        <?php include 'pages/modal/add-category-modal.php';?>
                         <!-- /End Modal -->
                         
                         <div class="card-body">
@@ -55,7 +50,6 @@
                                         <tr>
                                             <th>No.</th>
                                             <th>ICT Category</th>
-                                            <th>Date Created</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -67,24 +61,19 @@
                                             if ($result->num_rows > 0) {
                                                 $cnt = 1;
                                                 while ($cat = $result->fetch_object()) { ?>
-                                        <tr>
-                                            <td><?php echo $cnt ?></td>
-                                            <td><?php echo $cat->category_name ?></td>
-                                            <td>
-                                                <div class="badge badge-warning text-xs">
-                                                <?php $cre = $cat->created_at; print date("M d,Y D h:i A", strtotime($cre)) ?>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="" class="btn btn-primary btn-xs" title="Edit">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a href="" class="btn btn-danger btn-xs" title="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                            <?php
+                                                <tr>
+                                                    <td><?php echo $cnt ?></td>
+                                                    <td><?php echo $cat->category_name ?></td>
+                                                    <td>
+                                                        <a href="./edit-category&token=<?php echo $cat->token?>" class="btn btn-info btn-xs" title="Edit">
+                                                            <i class="fas fa-info-circle"></i>
+                                                        </a>
+                                                        <a href="" class="btn btn-danger btn-xs" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <?php
                                                     $cnt++;
                                                 }
                                             } else {
@@ -105,5 +94,13 @@
 </div>
 <!-- /.content-wrapper -->
 
+<?php include 'pages/script/category.php';?>
+
 <?= element( 'footer' ); ?>
+
+<script type="text/javascript">
+    setTimeout(function () {
+        $( "#alert" ).delay(2500).fadeOut(5000);
+    }, );
+</script>
 

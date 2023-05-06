@@ -67,8 +67,8 @@
                                                             <td><?php echo $classification->class_name ?></td>
                                                             <td><?php echo $classification->class_code ?></td>
                                                             <td>
-                                                                <a href="./edit-classification&token=<?php echo $classification->token?>" class="btn btn-primary btn-xs" title="Edit">
-                                                                    <i class="fas fa-pen"></i>
+                                                                <a href="./edit-classification&token=<?php echo $classification->token?>" class="btn btn-info btn-xs" title="Edit">
+                                                                    <i class="fas fa-info-circle"></i>
                                                                 </a>
                                                                 <a href="" class="btn btn-danger btn-xs" title="Delete">
                                                                     <i class="fas fa-trash"></i>

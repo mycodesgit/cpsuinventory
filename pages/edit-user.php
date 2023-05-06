@@ -142,7 +142,7 @@
                                     <div class="form-group">
                                         <div class="form-row">
                                             <div class="col-md-12">
-                                                <a href="./dashboard" class="btn btn-danger">
+                                                <a href="./users" class="btn btn-danger">
                                                     Cancel
                                                 </a>
                                                 <button type="submit" name="btn-update" class="btn btn-primary">

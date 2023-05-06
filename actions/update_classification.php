@@ -27,7 +27,7 @@ if (isset($_POST['btn-update'])) {
             if($stmt->execute()){
                 set_message("<i class='fa fa-check'></i> Classification Updated Successfully",  'success');
             } else {
-                set_message("<i class='fa fa-times'></i> Classification Failed to Update Password" .$DB->error, 'danger');
+                set_message("<i class='fa fa-times'></i> Classification Failed to Update" .$DB->error, 'danger');
             }
         }
     }

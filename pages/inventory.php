@@ -81,8 +81,8 @@
                                                             <td><?php echo $item->end_user ?></td>
                                                             <td><?php echo $item->office_abbr ?></td>
                                                             <td>
-                                                                <a href="./edit-inventory&token=<?php echo $item->token?>" class="btn btn-primary btn-xs" title="Edit">
-                                                                    <i class="fas fa-pen"></i>
+                                                                <a href="./edit-inventory&token=<?php echo $item->token?>" class="btn btn-info btn-xs" title="Edit">
+                                                                    <i class="fas fa-info-circle"></i>
                                                                 </a>
                                                                 <a href="" class="btn btn-danger btn-xs" title="Delete">
                                                                     <i class="fas fa-trash"></i>

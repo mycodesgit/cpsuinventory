@@ -67,8 +67,8 @@
                                                             <td><?php echo $office->office_name ?></td>
                                                             <td><?php echo $office->office_abbr ?></td>
                                                             <td>
-                                                                <a href="./edit-office&token=<?php echo $office->token?>" class="btn btn-primary btn-xs" title="Edit">
-                                                                    <i class="fas fa-pen"></i>
+                                                                <a href="./edit-office&token=<?php echo $office->token?>" class="btn btn-info btn-xs" title="Edit">
+                                                                    <i class="fas fa-info-circle"></i>
                                                                 </a>
                                                                 <a href="" class="btn btn-danger btn-xs" title="Delete">
                                                                     <i class="fas fa-trash"></i>

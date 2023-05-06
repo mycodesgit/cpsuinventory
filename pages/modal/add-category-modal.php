@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <i class="fas fa-plus"></i> Add ICT Category
+                    <i class="fas fa-plus"></i> Add Category
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -11,14 +11,14 @@
             </div>
             
             <div class="modal-body">
-               <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">  
-                    <input type="hidden" name="action" value="add_new_ict_category"> 
+               <form class="form-horizontal" method="post" id="addCat" enctype="multipart/form-data">  
+                    <input type="hidden" name="action" value="add_category"> 
 
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-12">
-                                <label for="exampleInputName">ICT Category:</label>
-                                <input type="text" name="category_name" oninput="this.value = this.value.toUpperCase()" placeholder="Enter ICT Category" class="form-control" required>
+                                <label for="exampleInputName">Category:</label>
+                                <input type="text" name="category_name" oninput="this.value = this.value.toUpperCase()" placeholder="Enter Category" class="form-control">
                             </div>
                         </div>
                     </div>
