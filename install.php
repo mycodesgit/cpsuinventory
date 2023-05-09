@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "r@@t";
-$dbname = "db_biometric";
+$dbname = "db_cpsuinventory";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password);
@@ -110,46 +110,41 @@ mysqli_select_db($conn, $dbname);
 $password = mysqli_real_escape_string($conn, '$2y$10$DMeckYrbcEJ40CTac8xHiOMoXhSDUcrLQjjMyqsD.Pb3ExatXyn7q');
 // SQL queries to create database, tables and insert data
 $sql = "
-        CREATE TABLE employee (
-            `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            `fname` varchar(30) NOT NULL,
-            `mname` varchar(30) NOT NULL,
-            `lname` varchar(30) NOT NULL,
-            `username` varchar(30) NOT NULL,
-            `password` char(255) NOT NULL,
-            `emp_email` varchar(50) NOT NULL,
-            `emp_birthdate` date NOT NULL,
-            `emp_age` int(11) NOT NULL,
-            `emp_contact` varchar(11) NOT NULL,
-            `emp_gender` varchar(30) NOT NULL,
-            `civil_status` varchar(30) NOT NULL,
-            `emp_id` varchar(30) NOT NULL,
-            `usertype` varchar(30) NOT NULL,
-            `stat_bio` int(11) NOT NULL DEFAULT '0',
-            `emp_address` varchar(200) NOT NULL,
-            `token` varchar(200) NOT NULL,
-            `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            `updated_at` datetime NOT NULL
-        );
-        INSERT INTO employee (`id`, `fname`, `mname`, `lname`, `username`, `password`, `emp_email`, `emp_birthdate`, `emp_age`, `emp_contact`, `emp_gender`, `civil_status`, `emp_id`, `usertype`, `stat_bio`, `emp_address`, `token`, `created_at`, `updated_at`) 
-        VALUES (1, 'JOHN', 'T', 'WICK', 'admin', '$password', 'admin@gmail.com', '1995-01-01', 28, '09123456789', 'Male', 'Single', 'E5031', 'Administrator', 0, 'admin address', 'bc73da01222532f6c7adbc57483200d3', '2023-04-23 15:28:54', '0000-00-00 00:00:00');
-
         CREATE TABLE users (
             `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `username` varchar(30) NOT NULL,
+            `password` varchar(255) NOT NULL,
             `fname` varchar(30) NOT NULL,
             `mname` varchar(30) NOT NULL,
-            `lname` varchar(30) NOT NULL,
-            `username` varchar(30) NOT NULL,
-            `password` char(255) NOT NULL,
-            `emp_id` varchar(30) NOT NULL,
-            `status` int(11) NOT NULL DEFAULT '1',
-            `usertype` varchar(30) NOT NULL,
+            `lname` varchar(20) NOT NULL,
+            `emp_gender` varchar(30) NOT NULL,
+            `usertype` varchar(50) NOT NULL,
             `token` varchar(200) NOT NULL,
-            `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            `updated_at` date NOT NULL
+            `status` varchar(2) NOT NULL DEFAULT '1',
+            `log_status` int(11) NOT NULL DEFAULT 0,
+            `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+            `updated_at` varchar(100) DEFAULT NULL
         );
-        INSERT INTO users (`id`, `fname`, `mname`, `lname`, `username`, `password`, `emp_id`, `status`, `usertype`, `token`, `created_at`, `updated_at`) 
-        VALUES (1, 'JOHN', 'T', 'WICK', 'admin', '$password', 'E5031', 1, 'Administrator', 'bc73da01222532f6c7adbc57483200d3', '2023-04-23 15:28:54', '0000-00-00');
+        INSERT INTO users (`id`, `username`, `password`, `fname`, `mname`, `lname`, `emp_gender`, `usertype`, `token`, `status`, `log_status`, `created_at`, `updated_at`) 
+        VALUES (1, 'admin', '$2y$10$k9MxLPxxZMOUtX4y7D2nVuKEX5FQFHy6ggvbX8vXH0exQLd4g.RG2', 'JOSHUA KYLE', 'L', 'DALMACIO', 'Male', 'Administrator', 'bc73da01222532f6c7adbc57483200d3', '1', 0, '2023-05-02 13:38:36', NULL);
+
+        CREATE TABLE ppei (
+            `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `property_no` varchar(100) NOT NULL,
+            `qty` int(30) NOT NULL,
+            `serial_no` varchar(200) NOT NULL,
+            `category_id` int(11) NOT NULL,
+            `specification` text NOT NULL,
+            `acquisition_date` varchar(200) NOT NULL,
+            `unit` varchar(200) NOT NULL,
+            `unit_value` varchar(100) NOT NULL,
+            `classification_id` int(11) NOT NULL,
+            `end_user` varchar(200) NOT NULL,
+            `where_about` varchar(200) NOT NULL,
+            `remarks` varchar(200) NOT NULL,
+            `token` varchar(200) NOT NULL,
+            `created_at` datetime NOT NULL DEFAULT current_timestamp()
+        );
 
         ";
 

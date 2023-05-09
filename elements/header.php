@@ -44,6 +44,24 @@
         .form-control1 {
             height: 38px !important;
         }
+        .btn-app1 {
+            border-radius: 3px !important;
+            background-color: #93979b !important;
+            border: 1px solid #04401f !important;
+            color: #fff !important;
+            font-size: 10px !important;
+            height: 38px !important;
+            margin: 0 0 10px 10px !important;
+            min-width: 80px !important;
+            padding: 8px 5px !important;
+            position: relative !important;
+            text-align: center !important;
+        }
+        .btn-app1:hover {
+            border-radius: 3px !important;
+            background-color: #4c8968 !important;
+            border: 1px solid #fff000 !important;
+        }
         /*[class*=sidebar-dark] .nav-legacy.nav-sidebar>.nav-item>.nav-link.active {
             color: #fff;
         }
@@ -185,6 +203,18 @@
         //     "responsive": true,
         //     });
         });
+</script>
+
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+        theme: 'bootstrap4'
+        })
+    });
 </script>
 
 </body>

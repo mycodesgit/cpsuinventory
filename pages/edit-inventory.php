@@ -63,20 +63,24 @@
                                                 <input type="number" name="qty" placeholder="Enter Quantity" value="<?php echo $item->qty ?>" class="form-control">
                                             </div>
 
+
                                             <?php
+                                                // Get the list of offices
                                                 $stmt = $DB->prepare("SELECT id, category_name FROM category");
                                                 $stmt->execute();
-                                                $stmt->bind_result($id, $category_name);
-                                                    echo '<div class="col-sm-4">';
-                                                    echo '<label>Category:</label>';
-                                                    echo '<select name="category_id" class="form-control select2">';
-                                                    echo '<option value="">--- Select ---</option>';
-                                                while ($stmt->fetch()) {
-                                                    echo '<option value="' . $id . '">' . $category_name . '</option>';
-                                                }
-                                                    echo '</select>';
-                                                    echo '</div>';
+                                                $result = $stmt->get_result();
                                                 $stmt->close();
+                                                // Output the select box
+                                                echo '<div class="col-sm-4">';
+                                                echo '<label>Category:</label>';
+                                                echo '<select name="category_id" class="form-control select2">';
+                                                echo '<option value="">--- Select ---</option>';
+                                                while ($row = $result->fetch_object()) {
+                                                    $selected = ($row->id == $item->category_id) ? 'selected' : '';
+                                                    echo '<option value="' . $row->id . '" ' . $selected . '>' . $row->category_name . '</option>';
+                                                }
+                                                echo '</select>';
+                                                echo '</div>';
                                             ?>
 
                                         </div>
@@ -201,16 +205,6 @@
     },);
 </script>
 
-<script>
-    $(function () {
-        //Initialize Select2 Elements
-        $('.select2').select2()
 
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-        theme: 'bootstrap4'
-        })
-    });
-</script>
 
 <?= element( 'footer' ); ?>
