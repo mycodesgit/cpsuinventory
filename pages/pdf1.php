@@ -30,36 +30,7 @@ ob_start();
     font-weight: bold;
   }
 </style>
-<?php 
-    if(!isset($_SESSION['category_id'])){
-        $category_id = "";
-    }
-    if(isset($_SESSION['category_id'])){
-        $category_id = $_SESSION['category_id'];
-    }
-    
-    if(!isset($_SESSION['acquisition_date'])){
-        $acquisition_date1 = "";
-    }
-    if(isset($_SESSION['acquisition_date'])){
-        $acquisition_date1 = $_SESSION['acquisition_date'];
-    }
 
-    if(!isset($_SESSION['where_about'])){
-        $where_about1 = "";
-    }
-    if(isset($_SESSION['where_about'])){
-        $where_about1 = $_SESSION['where_about'];
-    }
-
-    if(!isset($_SESSION['end_user'])){
-        $end_user1 = "";
-    }
-    if(isset($_SESSION['end_user'])){
-        $end_user1 = $_SESSION['end_user'];
-    }
-
-?>
 <table>
   <thead>
     <tr>
@@ -70,7 +41,7 @@ ob_start();
     <tr>
       <th>Property Number</th>
       <th>Qty.</th>
-      <th>Category</th>
+      <th>Description</th>
       <th>Specification</th>
       <th>Acquisition Date</th>
       <th>Unit</th>
@@ -126,7 +97,7 @@ ob_start();
     <tr>
       <td><?php echo $item->property_no ?></td>
       <td><?php echo $item->qty ?></td>
-      <td><?php echo $item->category_name ?></td>
+      <td><?php echo $item->category_name." ", $item->description ?></td>
       <td><?php echo $item->specification ?></td>
       <td><?php $acq = $item->acquisition_date; print date("M d, Y", strtotime($acq)) ?></td>
       <td><?php echo $item->unit ?></td>

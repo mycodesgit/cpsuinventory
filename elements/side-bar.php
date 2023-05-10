@@ -16,6 +16,13 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="./returned" class="nav-link <?php echo basename($_SERVER['REQUEST_URI']) == 'returned' ? 'active' : ''; ?>">
+                <i class="nav-icon fas fa-list-alt"></i>
+                <p>Unserviceable</p>
+            </a>
+        </li>
+
         <li class="nav-header">Configuration</li>
         <li class="nav-item">
             <a href="./category" class="nav-link <?php echo basename($_SERVER['REQUEST_URI']) == 'category' ? 'active' : ''; ?>">

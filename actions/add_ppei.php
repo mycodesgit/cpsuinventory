@@ -4,6 +4,7 @@ if (isset($_POST['btn-submit'])) {
     $property_no = $_POST['property_no'];
     $qty = $_POST['qty'];
     $category_id = $_POST['category_id'];
+    $description = $_POST['description'];
     $acquisition_date = $_POST['acquisition_date'];
     $unit = $_POST['unit'];
     $unit_value = $_POST['unit_value'];
@@ -30,10 +31,10 @@ if (isset($_POST['btn-submit'])) {
 
         if (!empty($serial_no)) {
 
-            $sql_insert = "INSERT INTO ppei SET property_no=?, qty=?, category_id=?, acquisition_date=?, unit=?, unit_value=?, classification_id=?, end_user=?, where_about=?, serial_no=?, specification=?, remarks=?, token=?";
+            $sql_insert = "INSERT INTO ppei SET property_no=?, qty=?, category_id=?, description=?, acquisition_date=?, unit=?, unit_value=?, classification_id=?, end_user=?, where_about=?, serial_no=?, specification=?, remarks=?, token=?";
 
             $stmt_insert = $DB->prepare($sql_insert);
-            $stmt_insert->bind_param("siisssissssss", $property_no, $qty, $category_id, $acquisition_date, $unit, $unit_value, $classification_id, $end_user, $where_about, $serial_no, $specification, $remarks, $token);
+            $stmt_insert->bind_param("siisssisssssss", $property_no, $qty, $category_id, $description, $acquisition_date, $unit, $unit_value, $classification_id, $end_user, $where_about, $serial_no, $specification, $remarks, $token);
 
             if($stmt_insert->execute()){
                 set_message("<i class='fa fa-check'></i> Added Successfully",  'success');

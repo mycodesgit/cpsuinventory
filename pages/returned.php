@@ -9,12 +9,12 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1><i class="fas fa-desktop"></i> Inventory</h1>
+                            <h1><i class="fas fa-list-alt"></i> Unserviceable</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="./dashboard">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Inventory</li>
+                                <li class="breadcrumb-item active">Unserviceable</li>
                             </ol>
                         </div>
                     </div>
@@ -32,51 +32,40 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-md-1.5">
-                                            <div class="form-group">
-                                                <div class="form-row">
-                                                    <div class="col-sm-2">
-                                                        <a href="./add-inventory" class="btn btn-app1">
-                                                            <i class="fas fa-plus" style="color: #fff"></i> Add New
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <?php 
-                                        if(!isset($_SESSION['category_id'])){
+                                        if(!isset($_SESSION['category_id1'])){
                                             $category_id = "";
                                         }
-                                        if(isset($_SESSION['category_id'])){
-                                            $category_id = $_SESSION['category_id'];
+                                        if(isset($_SESSION['category_id1'])){
+                                            $category_id = $_SESSION['category_id1'];
                                         }
                                         
-                                        if(!isset($_SESSION['acquisition_date'])){
+                                        if(!isset($_SESSION['acquisition_date1'])){
                                             $acquisition_date1 = "";
                                         }
-                                        if(isset($_SESSION['acquisition_date'])){
-                                            $acquisition_date1 = $_SESSION['acquisition_date'];
+                                        if(isset($_SESSION['acquisition_date1'])){
+                                            $acquisition_date1 = $_SESSION['acquisition_date1'];
                                         }
 
-                                        if(!isset($_SESSION['where_about'])){
+                                        if(!isset($_SESSION['where_about1'])){
                                             $where_about1 = "";
                                         }
-                                        if(isset($_SESSION['where_about'])){
-                                            $where_about1 = $_SESSION['where_about'];
+                                        if(isset($_SESSION['where_about1'])){
+                                            $where_about1 = $_SESSION['where_about1'];
                                         }
 
-                                        if(!isset($_SESSION['end_user'])){
+                                        if(!isset($_SESSION['end_user1'])){
                                             $end_user1 = "";
                                         }
-                                        if(isset($_SESSION['end_user'])){
-                                            $end_user1 = $_SESSION['end_user'];
+                                        if(isset($_SESSION['end_user1'])){
+                                            $end_user1 = $_SESSION['end_user1'];
                                         }
 
                                         ?>
                                         <div class="col-md-10">
                                             <div class="form-group">
                                                 <form method="POST">
-                                                <input type="hidden" name="action" value="set_session">
+                                                <input type="hidden" name="action" value="set_session_return">
                                                     <div class="form-row">
                                                         <div class="col-sm-2">
                                                             <?php
@@ -142,7 +131,7 @@
                                                             <button type="submit" name="btn-setsessions" class="btn btn-app1">
                                                                 <i class="fas fa-search" style="color: #fff"></i> Search
                                                             </button>
-                                                            <a href="./pdf1" target="_blank" class="btn btn-app1">
+                                                            <a href="./pdf2" target="_blank" class="btn btn-app1">
                                                                 <i class="fas fa-print" style="color: #fff"></i> Print
                                                             </a>
                                                         </div>
@@ -152,8 +141,6 @@
                                         </div>
                                     </div>
 
-                                    
-                                    
                                 </div>
                                 <!-- /.card-header -->
                                 <?= show_message(); ?>
@@ -182,38 +169,38 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    if(!isset($_SESSION['category_id'])){
+                                                    if(!isset($_SESSION['category_id1'])){
                                                         $category_id = "";
                                                     }
-                                                    if(isset($_SESSION['category_id'])){
-                                                        $category_id = $_SESSION['category_id'];
+                                                    if(isset($_SESSION['category_id1'])){
+                                                        $category_id = $_SESSION['category_id1'];
                                                     }
                                                     
-                                                    if(!isset($_SESSION['acquisition_date'])){
+                                                    if(!isset($_SESSION['acquisition_date1'])){
                                                         $acquisition_date = "";
                                                     }
-                                                    if(isset($_SESSION['acquisition_date'])){
-                                                        $acquisition_date = $_SESSION['acquisition_date'];
+                                                    if(isset($_SESSION['acquisition_date1'])){
+                                                        $acquisition_date = $_SESSION['acquisition_date1'];
                                                     }
             
-                                                    if(!isset($_SESSION['where_about'])){
+                                                    if(!isset($_SESSION['where_about1'])){
                                                         $where_about = "";
                                                     }
-                                                    if(isset($_SESSION['where_about'])){
-                                                        $where_about = $_SESSION['where_about'];
+                                                    if(isset($_SESSION['where_about1'])){
+                                                        $where_about = $_SESSION['where_about1'];
                                                     }
             
-                                                    if(!isset($_SESSION['end_user'])){
+                                                    if(!isset($_SESSION['end_user1'])){
                                                         $end_user = "";
                                                     }
-                                                    if(isset($_SESSION['end_user'])){
-                                                        $end_user = $_SESSION['end_user'];
+                                                    if(isset($_SESSION['end_user1'])){
+                                                        $end_user = $_SESSION['end_user1'];
                                                     }
-                                                    if(!isset($_SESSION['category_id']) && !isset($_SESSION['acquisition_date']) && !isset($_SESSION['where_about']) && !isset($_SESSION['end_user'])){
-                                                        $query = $DB->prepare( "SELECT ppei.*, category.category_name AS category_name, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr FROM ppei INNER JOIN category ON ppei.category_id = category.id INNER JOIN classification ON classification.id = ppei.classification_id INNER JOIN offices ON offices.id = ppei.where_about WHERE statdel=1");
+                                                    if(!isset($_SESSION['category_id1']) && !isset($_SESSION['acquisition_date1']) && !isset($_SESSION['where_about1']) && !isset($_SESSION['end_user1'])){
+                                                        $query = $DB->prepare( "SELECT ppei.*, category.category_name AS category_name, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr FROM ppei INNER JOIN category ON ppei.category_id = category.id INNER JOIN classification ON classification.id = ppei.classification_id INNER JOIN offices ON offices.id = ppei.where_about WHERE ppei.remarks='Return'" );
                                                     }
-                                                    if(isset($_SESSION['category_id']) || isset($_SESSION['acquisition_date']) || isset($_SESSION['where_about']) || isset($_SESSION['end_user'])){
-                                                        $query = $DB->prepare( "SELECT ppei.*, category.category_name AS category_name, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr FROM ppei INNER JOIN category ON ppei.category_id = category.id INNER JOIN classification ON classification.id = ppei.classification_id INNER JOIN offices ON offices.id = ppei.where_about WHERE statdel=1 AND ppei.category_id LIKE '%$category_id%' AND ppei.acquisition_date LIKE '%$acquisition_date%' AND ppei.where_about LIKE '%$where_about%' AND ppei.end_user LIKE '%$end_user%'");
+                                                    if(isset($_SESSION['category_id1']) || isset($_SESSION['acquisition_date1']) || isset($_SESSION['where_about1']) || isset($_SESSION['end_user1'])){
+                                                        $query = $DB->prepare( "SELECT ppei.*, category.category_name AS category_name, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr FROM ppei INNER JOIN category ON ppei.category_id = category.id INNER JOIN classification ON classification.id = ppei.classification_id INNER JOIN offices ON offices.id = ppei.where_about WHERE ppei.remarks='Return' AND ppei.category_id LIKE '%$category_id%' AND ppei.acquisition_date LIKE '%$acquisition_date%' AND ppei.where_about LIKE '%$where_about%' AND ppei.end_user LIKE '%$end_user%'");
                                                     }
                                                     $query->execute();
                                                     $result = $query->get_result();
@@ -224,7 +211,7 @@
                                                             <td><?php echo $cnt ?></td>
                                                             <td><?php echo $item->property_no ?></td>
                                                             <td><?php echo $item->qty ?></td>
-                                                            <td><?php echo $item->category_name." ", $item->description ?></td>
+                                                            <td><?php echo $item->category_name." ", $item->description?></td>
                                                             <td><?php echo $item->serial_no ?></td>
                                                             <td><?php $acq = $item->acquisition_date; print date("M d, Y", strtotime($acq)) ?></td>
                                                             <td><?php echo $item->unit ?></td>
@@ -232,21 +219,10 @@
                                                             <td><?php echo $item->end_user ?></td>
                                                             <td><?php echo $item->office_abbr ?></td>
                                                             <td>
-                                                                <?php if($item->remarks == "Good"){  ?>
-                                                                <span class="badge badge-success"><?php echo $item->remarks ?></span>
-                                                                <?php } ?>
-                                                                <?php if($item->remarks == "Return"){  ?>
                                                                 <span class="badge badge-warning"><?php echo $item->remarks ?></span>
-                                                                <?php } ?>
                                                             </td>
                                                             <td>
-                                                                <a data-toggle="modal" data-target="#return<?php echo $item->token ?>" class="btn btn-secondary btn-xs" title="return">
-                                                                    <i class="fas fa-pen"></i>
-                                                                </a>
-                                                                <a href="./edit-inventory&token=<?php echo $item->token?>" class="btn btn-info btn-xs" title="Edit">
-                                                                    <i class="fas fa-info-circle"></i>
-                                                                </a>
-                                                                <a id="<?php echo $item->id ?>" onclick="deleteItem(this.id)" class="btn btn-danger btn-xs" title="Delete">
+                                                                <a href="" class="btn btn-danger btn-xs" title="Delete">
                                                                     <i class="fas fa-trash"></i>
                                                                 </a>
                                                             </td>
@@ -327,36 +303,5 @@
     setTimeout(function () {
         $( "#alert" ).delay(2500).fadeOut(5000);
     }, );
-
-    function deleteItem(id){
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: "GET",
-                    url: "actions/delete_inventory.php?id="+id,
-                    data: {id},
-                    success: function (response) {
-                        Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                        )
-                    }
-                });
-                
-            setTimeout(function() {
-                location.reload();
-                }, 2000);
-            }
-        })
-    }
 </script>
 

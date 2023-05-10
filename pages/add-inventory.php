@@ -50,7 +50,7 @@
 
                                             <div class="col-md-4">
                                                 <label for="exampleInputName">Quantity:</label>
-                                                <input type="number" name="qty" placeholder="Enter Quantity" class="form-control">
+                                                <input type="number" name="qty" value="1" placeholder="Enter Quantity" class="form-control" readonly>
                                             </div>
 
                                             <?php
@@ -69,6 +69,15 @@
                                                 $stmt->close();
                                             ?>
 
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <label for="exampleInputName">Description:</label>
+                                                <textarea name="description" rows="2" class="form-control"></textarea>
+                                            </div>
                                         </div>
                                     </div>
 
