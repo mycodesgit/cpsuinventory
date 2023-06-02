@@ -24,14 +24,75 @@
 			is assigned with a value.
 	*/
 
-	$restricted_pages[ 'Administrator' ]['access'] = [ "dashboard", "profile", "inventory", "add-inventory", "edit-inventory", "category", "edit-category", "logstatus", "classification", "edit-classification", "offices", "edit-office", "users", "edit-user", "pdf-form1", "pdf-form2", "pdf1", "pdf2", "returned"];
+	$restricted_pages[ 'Administrator' ]
+		['access'] = [ "dashboard", 
+						"profile", 
+						"inventory", 
+						"add-inventory", 
+						"edit-inventory", 
+						"add-return", 
+						"category", 
+						"edit-category", 
+						"logstatus", 
+						"classification", 
+						"edit-classification", 
+						"offices", 
+						"edit-office", 
+						"users", 
+						"edit-user", 
+						"pdf-form1", 
+						"pdf-form2", 
+						"pdf1", 
+						"pdf2", 
+						"pdf3", 
+						"returned", 
+						"import", 
+						"error-log"
+					];
 	$restricted_pages[ 'Administrator' ][ 'default_page' ] = "dashboard";
 
-	$restricted_pages[ 'SupplyOfficer' ]['access'] = [ "dashboard", "profile", "inventory", "add-inventory", "edit-inventory", "category", "logstatus", "classification", "edit-classification", "offices", "edit-office", "pdf-form1", "pdf-form2", "pdf1", "pdf2", "returned"];
+
+	$restricted_pages[ 'SupplyOfficer' ]
+		['access'] = [ "dashboard", 
+						"profile", 
+						"inventory", 
+						"add-inventory", 
+						"edit-inventory", 
+						"add-return", 
+						"category", 
+						"logstatus", 
+						"classification", 
+						"edit-classification", 
+						"offices", 
+						"edit-office", 
+						"pdf-form1", 
+						"pdf-form2", 
+						"pdf1", 
+						"pdf2", 
+						"returned"
+					];
 	$restricted_pages[ 'SupplyOfficer' ][ 'default_page' ] = "dashboard";
 
-	$restricted_pages[ 'Staff' ]['access'] = [ "dashboard", "profile", "inventory", "add-inventory", "edit-inventory", "category", "logstatus", "classification", "edit-classification", "offices", "edit-office", "pdf-form1", "pdf-form2", "pdf1", "pdf2", "returned" ];
+	$restricted_pages[ 'Staff' ]
+		['access'] = [ "dashboard", 
+						"profile", 
+						"inventory", 
+						"add-inventory", 
+						"edit-inventory", 
+						"category", 
+						"logstatus", 
+						"classification", 
+						"edit-classification", 
+						"offices", 
+						"edit-office", 
+						"pdf-form1", 
+						"pdf-form2", 
+						"pdf1", 
+						"pdf2", 
+						"returned" 
+					];
 	$restricted_pages[ 'Staff' ][ 'default_page' ] = "dashboard";
+	
 	
 	$restricted_pages[ 'default' ]['access'] = [ "login", "register" ];
 	$restricted_pages[ 'default' ][ 'default_page' ] = "default"; 

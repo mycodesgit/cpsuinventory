@@ -1,20 +1,6 @@
 <?php if( ! defined( 'ACCESS' ) ) die( 'DIRECT ACCESS NOT ALLOWED' ); 
 
 if (isset($_POST['btn-setsessions'])) {
-    if($_POST['category_id'] != ""){
-        $category_id = $_POST['category_id'];
-        $_SESSION['category_id'] = $category_id;
-    }
-    if($_POST['category_id'] == ""){
-        unset($_SESSION['category_id']);
-    }
-    if($_POST['acquisition_date'] != ""){
-        $acquisition_date = $_POST['acquisition_date'];
-        $_SESSION['acquisition_date'] = $acquisition_date;
-    }
-    if($_POST['acquisition_date'] == ""){
-        unset($_SESSION['acquisition_date']);
-    }
     if($_POST['where_about'] != ""){
         $where_about = $_POST['where_about'];
         $_SESSION['where_about'] = $where_about;
@@ -28,6 +14,20 @@ if (isset($_POST['btn-setsessions'])) {
     }
     if($_POST['end_user'] == ""){
         unset($_SESSION['end_user']);
+    }
+    if($_POST['date1'] != ""){
+        $date1 = $_POST['date1'];
+        $_SESSION['date1'] = $date1;
+    }
+    if($_POST['date1'] == ""){
+        unset($_SESSION['date1']);
+    }
+    if($_POST['date2'] != ""){
+        $date2 = $_POST['date2'];
+        $_SESSION['date2'] = $date2;
+    }
+    if($_POST['date2'] == ""){
+        unset($_SESSION['date2']);
     }
 }
 ?>

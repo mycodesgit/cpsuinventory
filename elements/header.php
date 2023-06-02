@@ -29,6 +29,9 @@
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="assets/adminLTE-3/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="assets/adminLTE-3/plugins/dropzone/min/dropzone.min.css">
+
     <!-- summernote -->
     <link rel="stylesheet" href="assets/adminLTE-3/plugins/summernote/summernote-bs4.min.css">
 
@@ -171,6 +174,9 @@
 <!-- jquery-validation -->
 <script src="assets/adminLTE-3/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="assets/adminLTE-3/plugins/jquery-validation/additional-methods.min.js"></script>
+
+<!-- dropzonejs -->
+<script src="assets/adminLTE-3/plugins/dropzone/min/dropzone.min.js"></script>
 
 <!-- SweetAlert2 -->
 <script src="assets/adminLTE-3/plugins/sweetalert2/sweetalert2.min.js"></script>

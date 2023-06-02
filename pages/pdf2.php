@@ -39,12 +39,12 @@ ob_start();
 <table>
   <thead>
     <tr>
-        <td class="none" colspan="18" style="text-align: right; padding: 8px; font-style: italic;">
+        <td class="none" colspan="21" style="text-align: right; padding: 8px; font-style: italic;">
             <h3>Appendix 74</h3>
         </td>
     </tr>
     <tr>
-        <td class="none" colspan="18" style="text-align: center; padding: 8px;">
+        <td class="none" colspan="21" style="text-align: center; padding: 8px;">
             <h3>INVENTORY AND INSPECTION REPORT OF UNSERVICEABLE PROPERTY</h3><br>
             As at _____________________________
         </td>
@@ -121,39 +121,101 @@ ob_start();
       <td>(21)</td>
     </tr>
     <?php
-      if(!isset($_SESSION['category_id'])){
-          $category_id = "";
-      }
-      if(isset($_SESSION['category_id'])){
-          $category_id = $_SESSION['category_id'];
-      }
+                  
+                  if(!isset($_SESSION['where_about1'])){
+                      $where_about = "";
+                  }
+                  if(isset($_SESSION['where_about1'])){
+                      $where_about = $_SESSION['where_about1'];
+                  }
+
+                  if(!isset($_SESSION['end_user1'])){
+                      $end_user = "";
+                  }
+                  if(isset($_SESSION['end_user1'])){
+                      $end_user = $_SESSION['end_user1'];
+                      
+                  }
+
+                  if(!isset($_SESSION['date11'])){
+                      $date1 = "";
+                  }
+                  if(isset($_SESSION['date11'])){
+                      $date1 = $_SESSION['date11'];
+                  }
+
+                  if(!isset($_SESSION['date22'])){
+                      $date2 = "";
+                  }
+                  if(isset($_SESSION['date22'])){
+                      $date2 = $_SESSION['date22'];
+                  }
+                   
+              if(!isset($_SESSION['where_about']) && !isset($_SESSION['end_user']) && !isset($_SESSION['date1']) && !isset($_SESSION['date2'])){
+                      $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+                      FROM ppei 
+                      INNER JOIN classification ON classification.id = ppei.classification_id 
+                      INNER JOIN offices ON offices.id = ppei.where_about 
+                      WHERE statdel = 1 AND remarks!='Good'");
+                     
+              }
+              else{
+                  if(!isset($_SESSION['date11']) && !isset($_SESSION['date22'])){
+                      if (isset($_SESSION['where_about1']) || isset($_SESSION['end_user1'])) {
+                          $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+                          FROM ppei 
+                          INNER JOIN classification ON classification.id = ppei.classification_id 
+                          INNER JOIN offices ON offices.id = ppei.where_about 
+                          WHERE statdel = 1 AND remarks!='Good'
+                          AND ppei.where_about LIKE ? 
+                          OR ppei.end_user LIKE ?");
+                          
+                          $query->bind_param('ss', $where_about, $end_user);
+                         
+                      }
+                      if (!isset($_SESSION['where_about1']) && !isset($_SESSION['end_user1'])) {
+                          $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+                          FROM ppei 
+                          INNER JOIN classification ON classification.id = ppei.classification_id 
+                          INNER JOIN offices ON offices.id = ppei.where_about 
+                          WHERE statdel = 1 AND remarks!='Good'");
+                         
+                      }
+                  }
+
+                  if (isset($_SESSION['date11']) && isset($_SESSION['date22'])) {
+                      if (isset($_SESSION['where_about1']) || isset($_SESSION['end_user1'])) {
+                          $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+                          FROM ppei 
+                          INNER JOIN classification ON classification.id = ppei.classification_id 
+                          INNER JOIN offices ON offices.id = ppei.where_about 
+                          WHERE statdel = 1 AND remarks!='Good' 
+                          AND ppei.where_about LIKE ? 
+                          OR ppei.end_user LIKE ? 
+                          AND ppei.created_at BETWEEN ? AND ?");
+  
+                          $where_about = '%' . $where_about . '%';
+                          $end_user = '%' . $end_user . '%';
+                          
+                          $query->bind_param('ssss', $where_about, $end_user, $date1, $date2);
+                         
+                      }
+                      if (!isset($_SESSION['where_about1']) && !isset($_SESSION['end_user1'])) {
+                          $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+                          FROM ppei 
+                          INNER JOIN classification ON classification.id = ppei.classification_id 
+                          INNER JOIN offices ON offices.id = ppei.where_about 
+                          WHERE statdel = 1 AND remarks!='Good' 
+                          AND ppei.created_at BETWEEN ? AND ?");
+  
+                          $end_user = '%' . $end_user . '%';
+                          
+                          $query->bind_param('ss', $date1, $date2);
+                         
+                      }
+                  }
+              }
       
-      if(!isset($_SESSION['acquisition_date'])){
-          $acquisition_date = "";
-      }
-      if(isset($_SESSION['acquisition_date'])){
-          $acquisition_date = $_SESSION['acquisition_date'];
-      }
-
-      if(!isset($_SESSION['where_about'])){
-          $where_about = "";
-      }
-      if(isset($_SESSION['where_about'])){
-          $where_about = $_SESSION['where_about'];
-      }
-
-      if(!isset($_SESSION['end_user'])){
-          $end_user = "";
-      }
-      if(isset($_SESSION['end_user'])){
-          $end_user = $_SESSION['end_user'];
-      }
-      if(!isset($_SESSION['category_id']) && !isset($_SESSION['acquisition_date']) && !isset($_SESSION['where_about']) && !isset($_SESSION['end_user'])){
-          $query = $DB->prepare( "SELECT ppei.*, category.category_name AS category_name, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr FROM ppei INNER JOIN category ON ppei.category_id = category.id INNER JOIN classification ON classification.id = ppei.classification_id INNER JOIN offices ON offices.id = ppei.where_about" );
-      }
-      if(isset($_SESSION['category_id']) || isset($_SESSION['acquisition_date']) || isset($_SESSION['where_about']) || isset($_SESSION['end_user'])){
-          $query = $DB->prepare( "SELECT ppei.*, category.category_name AS category_name, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr FROM ppei INNER JOIN category ON ppei.category_id = category.id INNER JOIN classification ON classification.id = ppei.classification_id INNER JOIN offices ON offices.id = ppei.where_about WHERE ppei.category_id LIKE '%$category_id%' AND ppei.acquisition_date LIKE '%$acquisition_date%' AND ppei.where_about LIKE '%$where_about%' AND ppei.end_user LIKE '%$end_user%'");
-      }
       $query->execute();
       $result = $query->get_result();
       $sum_unit_value = 0; 
@@ -163,7 +225,7 @@ ob_start();
     ?>
     <tr>
       <td><?php $acq = $item->acquisition_date; print date("M d, Y", strtotime($acq)) ?></td>
-      <td><?php echo $item->category_name." ", $item->description ?></td>
+      <td><?php echo $item->description ?></td>
       <td><?php echo $item->serial_no ?></td>
       <td><?php echo $item->property_no ?> <?php echo $item->specification ?></td>
       <td><?php echo $item->qty ?></td>
@@ -182,7 +244,7 @@ ob_start();
       <td></td>
       <td></td>
       <td><?php echo $item->end_user ?></td>
-      <td>Unserviceable</td>
+      <td><?php echo $item->remarks ?></td>
     </tr>
     <?php }
       } else {

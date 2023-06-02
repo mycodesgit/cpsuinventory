@@ -44,8 +44,9 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-12">
-                                <label for="exampleInputName">Userame:</label>
-                                <input type="text" name="username" placeholder="Enter Username" class="form-control">
+                                <label for="exampleInputName">Username:</label>
+                                <input type="text" id="username" name="username" placeholder="Enter Username" class="form-control">
+                                <span id="usernameStatus" style="font-size: 9pt"></span>
                             </div>
                         </div>
                     </div>

@@ -5,7 +5,7 @@
 ?>
 
 <?= element( 'header' ); ?>
-<link rel="stylesheet" href="AjaxDatatables/datatables.min.css">
+
 <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -146,7 +146,7 @@
                                 
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="example" class="table table-hover text-sm">
+                                        <table id="example1" class="table table-hover text-sm">
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
@@ -160,9 +160,152 @@
                                                     <th>End User</th>
                                                     <th>Where About</th>
                                                     <th>Remarks</th>
-                                                    <th width="120">Actions</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
+                                            <tbody>
+                                                <?php
+            
+                                                    if(!isset($_SESSION['where_about'])){
+                                                        $where_about = "";
+                                                    }
+                                                    if(isset($_SESSION['where_about'])){
+                                                        $where_about = $_SESSION['where_about'];
+                                                    }
+            
+                                                    if(!isset($_SESSION['end_user'])){
+                                                        $end_user = "";
+                                                    }
+                                                    if(isset($_SESSION['end_user'])){
+                                                        $end_user = $_SESSION['end_user'];
+                                                        
+                                                    }
+
+                                                    if(!isset($_SESSION['date1'])){
+                                                        $date1 = "";
+                                                    }
+                                                    if(isset($_SESSION['date1'])){
+                                                        $date1 = $_SESSION['date1'];
+                                                    }
+
+                                                    if(!isset($_SESSION['date2'])){
+                                                        $date2 = "";
+                                                    }
+                                                    if(isset($_SESSION['date2'])){
+                                                        $date2 = $_SESSION['date2'];
+                                                    }
+                                                    
+                                                    if(!isset($_SESSION['where_about']) && !isset($_SESSION['end_user']) && !isset($_SESSION['date1']) && !isset($_SESSION['date2'])){
+                                                            $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+                                                            FROM ppei 
+                                                            INNER JOIN classification ON classification.id = ppei.classification_id 
+                                                            INNER JOIN offices ON offices.id = ppei.where_about 
+                                                            WHERE statdel = 1");
+                                                            $query->execute();
+                                                    }
+                                                    else{
+                                                        if(!isset($_SESSION['date1']) && !isset($_SESSION['date2'])){
+                                                            if (isset($_SESSION['where_about']) || isset($_SESSION['end_user'])) {
+                                                                $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+                                                                FROM ppei 
+                                                                INNER JOIN classification ON classification.id = ppei.classification_id 
+                                                                INNER JOIN offices ON offices.id = ppei.where_about 
+                                                                WHERE statdel = 1
+                                                                AND ppei.where_about LIKE ? 
+                                                                OR ppei.end_user LIKE ?");
+                                                                
+                                                                $query->bind_param('ss', $where_about, $end_user);
+                                                                $query->execute();
+                                                            }
+                                                            if (!isset($_SESSION['where_about']) && !isset($_SESSION['end_user'])) {
+                                                                $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+                                                                FROM ppei 
+                                                                INNER JOIN classification ON classification.id = ppei.classification_id 
+                                                                INNER JOIN offices ON offices.id = ppei.where_about 
+                                                                WHERE statdel = 1");
+                                                                $query->execute();
+                                                            }
+                                                        }
+
+                                                        if (isset($_SESSION['date1']) && isset($_SESSION['date2'])) {
+                                                            if (isset($_SESSION['where_about']) || isset($_SESSION['end_user'])) {
+                                                                $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+                                                                FROM ppei 
+                                                                INNER JOIN classification ON classification.id = ppei.classification_id 
+                                                                INNER JOIN offices ON offices.id = ppei.where_about 
+                                                                WHERE statdel = 1 
+                                                                AND ppei.where_about LIKE ? 
+                                                                OR ppei.end_user LIKE ? 
+                                                                AND ppei.created_at BETWEEN ? AND ?");
+                                        
+                                                                $where_about = '%' . $where_about . '%';
+                                                                $end_user = '%' . $end_user . '%';
+                                                                
+                                                                $query->bind_param('ssss', $where_about, $end_user, $date1, $date2);
+                                                                $query->execute();
+                                                            }
+                                                            if (!isset($_SESSION['where_about']) && !isset($_SESSION['end_user'])) {
+                                                                $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+                                                                FROM ppei 
+                                                                INNER JOIN classification ON classification.id = ppei.classification_id 
+                                                                INNER JOIN offices ON offices.id = ppei.where_about 
+                                                                WHERE statdel = 1 
+                                                                AND ppei.created_at BETWEEN ? AND ?");
+                                        
+                                                                $end_user = '%' . $end_user . '%';
+                                                                
+                                                                $query->bind_param('ss', $date1, $date2);
+                                                                $query->execute();
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    $query->execute();
+                                                    $result = $query->get_result();
+                                                    if ($result->num_rows > 0) {
+                                                        $cnt = 1;
+                                                        while ($item = $result->fetch_object()) { ?>
+                                                        <tr>
+                                                            <td><?php echo $cnt ?></td>
+                                                            <td><?php echo $item->property_no ?></td>
+                                                            <td><?php echo $item->qty ?></td>
+                                                            <td><?php echo $item->description ?></td>
+                                                            <td><?php echo $item->serial_no ?></td>
+                                                            <td><?php $acq = $item->acquisition_date; print date("M d, Y", strtotime($acq)) ?></td>
+                                                            <td><?php echo $item->unit ?></td>
+                                                            <td><?php echo $item->unit_value ?></td>
+                                                            <td><?php echo $item->end_user ?></td>
+                                                            <td><?php echo $item->office_abbr ?></td>
+                                                            <td>
+                                                                <?php if($item->remarks == "Good"){  ?>
+                                                                <span class="badge badge-success"><?php echo $item->remarks ?></span>
+                                                                <?php }else{ ?>
+                                                                <span class="badge badge-warning"><?php echo $item->remarks ?></span>
+                                                                <?php } ?>
+                                                            </td>
+                                                            <td>
+                                                                <a data-toggle="modal" id="<?php echo $item->token?>" data-target="#return" onclick="modalReturn(this.id)" class="btn btn-secondary btn-xs" title="return">
+                                                                    <i class="fas fa-pen"></i>
+                                                                </a>
+                                                                <a href="./edit-inventory&token=<?php echo $item->token?>" class="btn btn-info btn-xs" title="Edit">
+                                                                    <i class="fas fa-info-circle"></i>
+                                                                </a>
+                                                                <a data-toggle="modal" id="<?php echo $item->token?>" data-target="#release" onclick="modalRelease(this.id)" class="btn btn-secondary btn-xs" title="release">
+                                                                    <i class="fas fa-arrow-right"></i>
+                                                                </a>
+                                                                <a id="<?php echo $item->id ?>" onclick="deleteItem(this.id)" class="btn btn-danger btn-xs" title="Delete">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        <?php
+                                                            $cnt++;
+                                                        }
+                                                    } else {
+                                                    }
+                                                ?>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -176,7 +319,7 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-<div class="modal fade" id="return">
+        <div class="modal fade" id="return">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -191,7 +334,7 @@
             <div class="modal-body">
             <form class="form-horizontal" method="post" id="" enctype="multipart/form-data">  
                     <input type="hidden" name="action" value="update_remarks"> 
-                    <input type="hidden" id="remarks-token" name="token"> 
+                    <input type="hidden" id="remarks-token" name="token" value="<?php echo $item->token ?>"> 
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-12">
@@ -299,42 +442,12 @@
     </div>
 </div>
 
-<script src="AjaxDatatables/jquery.min.js"></script>
-<script src="AjaxDatatables/datatables.min.js"></script>
+
 <?php include 'pages/script/office.php';?>
 
 <?= element( 'footer' ); ?>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#example').DataTable({
-            ajax: {
-                url: 'pages/AjaxDatatables/inventory_data.php', // Replace with the endpoint URL to fetch data from the database
-                dataSrc: 'data' // Property name in the response object that contains the data array
-            },
-            columns: [
-                { data: 'no' },
-                { data: 'property_no'},
-                { data: 'qty' },
-                { data: 'description'},
-                { data: 'serial_no' },
-                { data: 'acquisition_date'},
-                { data: 'unit'},
-                { data: 'unit_value'},
-                { data: 'end_user'},
-                { data: 'where_about'},
-                { data: 'remarks'},
-                { data: 'action'}
-            ],
-            // Customizing the DataTables appearance
-            responsive: true, // Enable responsive design
-            lengthChange: true, // Disable the ability to change the number of entries shown
-            searching: true, // Enable search functionality
-            ordering: true, // Enable column sorting
-            paging: true // Enable pagination
-        });
-    });
-
     setTimeout(function () {
         $( "#alert" ).delay(2500).fadeOut(5000);
     }, );
@@ -370,6 +483,8 @@
         })
     }
     
+
+    
     function modalRelease(id){
         document.getElementById("enduser-token").value=id;
     }
@@ -377,6 +492,7 @@
     $(function() {
         $("#other-enduser").hide();
     });
+
     
     function thisRelease(val){
         if(val == 0){

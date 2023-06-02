@@ -9,12 +9,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1><i class="fas fa-desktop"></i> Add Inventory</h1>
+                        <h1><i class="fas fa-desktop"></i> Add Anserviceable</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="./dashboard">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Add Inventory</li>
+                            <li class="breadcrumb-item active">Add Anserviceable</li>
                         </ol>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    <i class="fas fa-exclamation-circle"></i> Inventory
+                                    <i class="fas fa-exclamation-circle"></i> Anserviceable
                                 </h3>
                             </div>
                             <!-- /.card-header -->
@@ -43,7 +43,6 @@
 
                                     <div class="form-group">
                                         <div class="form-row">
-                                            <input type="hidden" name="remarks" value="Good">
                                             <div class="col-md-4">
                                                 <label for="exampleInputName">Property Number:</label>
                                                 <input type="text" name="property_no" oninput="this.value = this.value.toUpperCase()" placeholder="Enter Property Number" class="form-control">
@@ -73,7 +72,7 @@
                                                 <label for="exampleInputName">Unit:</label>
                                                 <select class="form-control" name="unit">
                                                     <option value="">--- Select ---</option>
-                                                    <option value="unit">Unit</option>
+                                                    <option value="Unit">Unit</option>
                                                     <option value="pcs">Pcs</option>
                                                     <option value="box">Box</option>
                                                     <option value="PC">PC</option>
@@ -86,8 +85,7 @@
 
                                             <div class="col-md-4">
                                                 <label for="exampleInputName">Unit Value:</label>
-                                                <input type="number" name="unit_value" placeholder="Unit Value" class="form-control">
-                                                <input type="text" name="remarks" placeholder="Unit Value" value="Good Order and Condition" class="form-control" hidden>
+                                                <input type="number" name="unit_value" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -137,12 +135,29 @@
                                         <div class="form-row">
                                             <div class="col-md-4">
                                                 <label for="exampleInputName">Specification:</label>
-                                                <textarea name="specification" rows="2" class="form-control"></textarea>
+                                                <textarea name="specification" rows="3" class="form-control"></textarea>
                                             </div>
 
-                                            <div class="col-md-8">
+                                            <div class="col-md-4">
                                                 <label for="exampleInputName">Description:</label>
-                                                <textarea name="description" rows="2" class="form-control"></textarea>
+                                                <textarea name="description" rows="3" class="form-control"></textarea>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="col-12">
+                                                    <label for="exampleInputName">Remarks:</label>
+                                                    <select onchange="thisRemark(this.value)" id="remarks" name="remarks" class="form-control">
+                                                    <option value="">--- Select ---</option>
+                                                    <option>Unserviceable</option>
+                                                    <option>Destroyed</option>
+                                                    <option>Damaged</option>
+                                                    <option>Lost</option>
+                                                    <option value="0">Others</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 pt-2">
+                                                    <input type="text" name="other_remarks" id="other-remarks" class="form-control" placeholder="Remarks" autocomplete="off" required>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -176,6 +191,21 @@
     setTimeout(function() {
         $('#alert').delay(2500).fadeOut(5000);
     },);
+    
+    $(function() {
+        $("#other-remarks").hide();
+    });
+
+    function thisRemark(val){
+        if(val == 0){
+            $("#other-remarks").show();
+            $("#other-remarks").val("");
+        }
+        else{
+            $("#other-remarks").hide();
+            $("#other-remarks").val("");
+        }
+    }
 </script>
 
 <?php include 'pages/script/inventory.php';?>

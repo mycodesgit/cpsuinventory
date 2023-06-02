@@ -27,8 +27,10 @@ if (isset($_POST['btn-submit'])) {
 
             if($stmt_insert->execute()){
                 set_message("<i class='fa fa-check'></i> Office Added Successfully",  'success');
+                header("Location: ./offices");
             } else {
                 set_message("<i class='fa fa-times'></i> Office Failed to Add" .$DB->error, 'danger');
+                header("Location: ./offices");
             }
         }
     }

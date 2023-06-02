@@ -2,15 +2,17 @@
 
 if (isset($_POST['btn-remarks'])) {
     $token = $_POST['token'];
-    $remarks = "Return";
-    $return_qty = $_POST['reason'];
+    $remarks = $_POST['remarks'];
+    if($remarks == 0){
+        $remarks = $_POST['other_remarks'];
+    }
     $reason = $_POST['reason'];
 
     
-    $sql = "UPDATE ppei SET remarks=?, reason=?, return_qty=?   WHERE token=?";
+    $sql = "UPDATE ppei SET remarks=? WHERE token=?";
 
     $stmt = $DB->prepare($sql);
-    $stmt->bind_param("ssss", $remarks, $reason, "return_qty-".$return_qty, $token);
+    $stmt->bind_param("ss", $remarks, $token);
 
     if($stmt->execute()){
         set_message("<i class='fa fa-check'></i> Remarks Updated Successfully",  'success');

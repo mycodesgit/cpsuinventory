@@ -24,12 +24,12 @@
         </li>
 
         <li class="nav-header">Configuration</li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a href="./category" class="nav-link <?php echo basename($_SERVER['REQUEST_URI']) == 'category' ? 'active' : ''; ?>">
                 <i class="nav-icon fas fa-layer-group"></i>
                 <p>Category</p>
             </a>
-        </li>
+        </li> -->
         
         <li class="nav-item">
             <a href="./classification" class="nav-link <?php echo basename($_SERVER['REQUEST_URI']) == 'classification' ? 'active' : ''; ?>">

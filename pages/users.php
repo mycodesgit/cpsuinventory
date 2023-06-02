@@ -44,10 +44,6 @@
                                 <!-- /End Modal -->
                                 
                                 <div class="card-body">
-                                    <?php
-                                        $query = $DB->query( "SELECT * FROM users WHERE usertype='User'" );
-                                    ?>
-                                   
                                     <div class="table-responsive">
                                         <table id="example1" class="table table-hover text-sm">
                                             <thead>
@@ -87,6 +83,9 @@
                                                                 <a href="" class="btn btn-danger btn-xs" title="Delete">
                                                                     <i class="fas fa-trash"></i>
                                                                 </a>
+                                                                <button data-id="<?php echo $user->id?>" class="btn btn-success btn-xs" value="0" onclick="updateUserStat(this)">
+                                                                    <i class="fas fa-power-off"></i>
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                         <script>
@@ -119,6 +118,9 @@
 
 <?= element( 'footer' ); ?>
 
+
+<script src="assets/js/addUserValidation.js"></script>
+
 <script>
     function stat(id){
         $.ajax({
@@ -136,6 +138,55 @@
         });
     }
 </script>
+
+<script>
+    function updateUserStat(element) {
+        var id = element.getAttribute("data-id");
+        var stat = element.value;
+
+        // Alert verification message before making the AJAX request
+        Swal.fire({
+            title: 'Confirmation',
+            text: 'Are you sure you want to logout this account?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Proceed with the AJAX request
+                $.ajax({
+                    type: "GET",
+                    url: "actions/update_userstat.php",
+                    data: { id: id, stat: stat },
+                    success: function (response) {
+                        if (response === "success") {
+                            Swal.fire(
+                                'Logout this account!',
+                                'The account has been successfully logout.',
+                                'success'
+                            );
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                'Failed to logout.',
+                                'error'
+                            );
+                        }
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Error!',
+                            'An error occurred.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+</script>
+
 
 <script type="text/javascript">
     setTimeout(function () {

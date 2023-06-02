@@ -12,8 +12,8 @@ if (isset($_POST['btn-submit'])) {
     $where_about = $_POST['where_about'];
     $serial_no = $_POST['serial_no'];
     $specification = $_POST['specification'];
-    $remarks = $_POST['remarks'];
-    
+    echo $remarks = $_POST['remarks'];
+    echo $_POST['other_remarks'];
     if($remarks == 0){
         $remarks = $_POST['other_remarks'];
     }
@@ -34,7 +34,7 @@ if (isset($_POST['btn-submit'])) {
 
         if (!empty($serial_no)) {
 
-            $sql_insert = "INSERT INTO ppei SET property_no=?, qty=?, description=?, acquisition_date=?, unit=?, unit_value=?, classification_id=?, end_user=?, where_about=?, serial_no=?, specification=?, remarks=?, token=?, statdel=1";
+            $sql_insert = "INSERT INTO ppei SET property_no=?, qty=?, description=?, acquisition_date=?, unit=?, unit_value=?, classification_id=?, end_user=?, where_about=?, serial_no=?, specification=?, remarks=?, token=?";
 
             $stmt_insert = $DB->prepare($sql_insert);
             $stmt_insert->bind_param("sisssisssssss", $property_no, $qty, $description, $acquisition_date, $unit, $unit_value, $classification_id, $end_user, $where_about, $serial_no, $specification, $remarks, $token);

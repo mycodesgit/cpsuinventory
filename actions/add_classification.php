@@ -27,8 +27,10 @@ if (isset($_POST['btn-submit'])) {
 
             if($stmt_insert->execute()){
                 set_message("<i class='fa fa-check'></i> Classification Added Successfully",  'success');
+                header("Location: ./classification");
             } else {
                 set_message("<i class='fa fa-times'></i> Classification Failed to Add" .$DB->error, 'danger');
+                header("Location: ./classification");
             }
         }
     }
