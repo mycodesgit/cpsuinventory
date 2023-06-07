@@ -56,7 +56,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    $query = $DB->prepare( "SELECT * FROM offices" );
+                                                    $query = $DB->prepare( "SELECT * FROM offices WHERE offdel= 1" );
                                                     $query->execute();
                                                     $result = $query->get_result();
                                                     if ($result->num_rows > 0) {
@@ -70,7 +70,7 @@
                                                                 <a href="./edit-office&token=<?php echo $office->token?>" class="btn btn-info btn-xs" title="Edit">
                                                                     <i class="fas fa-info-circle"></i>
                                                                 </a>
-                                                                <a href="" class="btn btn-danger btn-xs" title="Delete">
+                                                                <a id="<?php echo $office->id ?>" onclick="deleteItemOffice(this.id)" class="btn btn-danger btn-xs" title="Delete">
                                                                     <i class="fas fa-trash"></i>
                                                                 </a>
                                                             </td>
@@ -106,3 +106,33 @@
     }, );
 </script>
 
+<script>
+    function deleteItemOffice(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "GET",
+                    url: "actions/delete_office.php",
+                    data: { id },
+                    success: function (response) {
+                      Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      ).then(() => {
+                            location.reload(); // Reload the page after successful deletion
+                        });
+                    }
+                });
+            }
+        });
+    }
+</script>

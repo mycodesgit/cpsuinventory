@@ -56,7 +56,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    $query = $DB->prepare( "SELECT * FROM classification" );
+                                                    $query = $DB->prepare( "SELECT * FROM classification WHERE classdel=1" );
                                                     $query->execute();
                                                     $result = $query->get_result();
                                                     if ($result->num_rows > 0) {
@@ -70,9 +70,9 @@
                                                                 <a href="./edit-classification&token=<?php echo $classification->token?>" class="btn btn-info btn-xs" title="Edit">
                                                                     <i class="fas fa-info-circle"></i>
                                                                 </a>
-                                                                <a href="" class="btn btn-danger btn-xs" title="Delete">
+                                                                <button id="<?php echo $classification->id ?>" onclick="deleteItemClass(this.id)" class="btn btn-danger btn-xs" title="Delete">
                                                                     <i class="fas fa-trash"></i>
-                                                                </a>
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                         <?php
@@ -104,5 +104,36 @@
     setTimeout(function () {
         $( "#alert" ).delay(2500).fadeOut(5000);
     }, );
+</script>
+
+<script>
+    function deleteItemClass(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "GET",
+                    url: "actions/delete_classification.php",
+                    data: { id },
+                    success: function (response) {
+                      Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      ).then(() => {
+                            location.reload(); // Reload the page after successful deletion
+                        });
+                    }
+                });
+            }
+        });
+    }
 </script>
 

@@ -234,7 +234,6 @@
         
 <script src="AjaxDatatables/jquery.min.js"></script>
 <script src="AjaxDatatables/datatables.min.js"></script>
-<?php include 'pages/script/office.php';?>
 
 <?= element( 'footer' ); ?>
 
