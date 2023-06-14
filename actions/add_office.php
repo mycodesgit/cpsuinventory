@@ -21,7 +21,6 @@ if (isset($_POST['btn-submit'])) {
         if (!empty($office_name) && !empty($office_abbr)) {
 
             $sql_insert = "INSERT INTO offices SET office_name=?, office_abbr=?, token=?";
-
             $stmt_insert = $DB->prepare($sql_insert);
             $stmt_insert->bind_param("sss", $office_name, $office_abbr, $token);
 

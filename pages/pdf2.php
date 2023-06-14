@@ -121,100 +121,66 @@ ob_start();
       <td>(21)</td>
     </tr>
     <?php
-                  
-                  if(!isset($_SESSION['where_about1'])){
-                      $where_about = "";
-                  }
-                  if(isset($_SESSION['where_about1'])){
-                      $where_about = $_SESSION['where_about1'];
-                  }
+      if (!isset($_SESSION['end_user'])) {
+        $end_user = "";
+      }
+      if (isset($_SESSION['end_user'])) {
+        $end_user = $_SESSION['end_user'];
+      }
 
-                  if(!isset($_SESSION['end_user1'])){
-                      $end_user = "";
-                  }
-                  if(isset($_SESSION['end_user1'])){
-                      $end_user = $_SESSION['end_user1'];
-                      
-                  }
+      if (!isset($_SESSION['date1'])) {
+        $date1 = "";
+      }
+      if (isset($_SESSION['date1'])) {
+        $date1 = $_SESSION['date1'];
+      }
 
-                  if(!isset($_SESSION['date11'])){
-                      $date1 = "";
-                  }
-                  if(isset($_SESSION['date11'])){
-                      $date1 = $_SESSION['date11'];
-                  }
+      if (!isset($_SESSION['date2'])) {
+        $date2 = "";
+      }
+      if (isset($_SESSION['date2'])) {
+        $date2 = $_SESSION['date2'];
+      }
 
-                  if(!isset($_SESSION['date22'])){
-                      $date2 = "";
-                  }
-                  if(isset($_SESSION['date22'])){
-                      $date2 = $_SESSION['date22'];
-                  }
-                   
-              if(!isset($_SESSION['where_about']) && !isset($_SESSION['end_user']) && !isset($_SESSION['date1']) && !isset($_SESSION['date2'])){
-                      $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
-                      FROM ppei 
-                      INNER JOIN classification ON classification.id = ppei.classification_id 
-                      INNER JOIN offices ON offices.id = ppei.where_about 
-                      WHERE statdel = 1 AND remarks!='Good'");
-                     
-              }
-              else{
-                  if(!isset($_SESSION['date11']) && !isset($_SESSION['date22'])){
-                      if (isset($_SESSION['where_about1']) || isset($_SESSION['end_user1'])) {
-                          $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
-                          FROM ppei 
-                          INNER JOIN classification ON classification.id = ppei.classification_id 
-                          INNER JOIN offices ON offices.id = ppei.where_about 
-                          WHERE statdel = 1 AND remarks!='Good'
-                          AND ppei.where_about LIKE ? 
-                          OR ppei.end_user LIKE ?");
-                          
-                          $query->bind_param('ss', $where_about, $end_user);
-                         
-                      }
-                      if (!isset($_SESSION['where_about1']) && !isset($_SESSION['end_user1'])) {
-                          $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
-                          FROM ppei 
-                          INNER JOIN classification ON classification.id = ppei.classification_id 
-                          INNER JOIN offices ON offices.id = ppei.where_about 
-                          WHERE statdel = 1 AND remarks!='Good'");
-                         
-                      }
-                  }
-
-                  if (isset($_SESSION['date11']) && isset($_SESSION['date22'])) {
-                      if (isset($_SESSION['where_about1']) || isset($_SESSION['end_user1'])) {
-                          $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
-                          FROM ppei 
-                          INNER JOIN classification ON classification.id = ppei.classification_id 
-                          INNER JOIN offices ON offices.id = ppei.where_about 
-                          WHERE statdel = 1 AND remarks!='Good' 
-                          AND ppei.where_about LIKE ? 
-                          OR ppei.end_user LIKE ? 
-                          AND ppei.created_at BETWEEN ? AND ?");
-  
-                          $where_about = '%' . $where_about . '%';
-                          $end_user = '%' . $end_user . '%';
-                          
-                          $query->bind_param('ssss', $where_about, $end_user, $date1, $date2);
-                         
-                      }
-                      if (!isset($_SESSION['where_about1']) && !isset($_SESSION['end_user1'])) {
-                          $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
-                          FROM ppei 
-                          INNER JOIN classification ON classification.id = ppei.classification_id 
-                          INNER JOIN offices ON offices.id = ppei.where_about 
-                          WHERE statdel = 1 AND remarks!='Good' 
-                          AND ppei.created_at BETWEEN ? AND ?");
-  
-                          $end_user = '%' . $end_user . '%';
-                          
-                          $query->bind_param('ss', $date1, $date2);
-                         
-                      }
-                  }
-              }
+      if (!isset($_SESSION['end_user']) && !isset($_SESSION['date1']) && !isset($_SESSION['date2'])) {
+        $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+        FROM ppei 
+        INNER JOIN classification ON classification.id = ppei.classification_id 
+        INNER JOIN offices ON offices.id = ppei.where_about 
+        AND remarks !='Good Order and Condition'
+        ORDER BY (remarks = 'Good Order and Condition') DESC, remarks ASC");
+        $query->execute();
+      }
+      if (isset($_SESSION['end_user']) && isset($_SESSION['date1']) && isset($_SESSION['date2'])) {
+        $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+        FROM ppei 
+        INNER JOIN classification ON classification.id = ppei.classification_id 
+        INNER JOIN offices ON offices.id = ppei.where_about 
+        AND remarks !='Good Order and Condition'AND ppei.end_user = ?
+        AND ppei.acquisition_date BETWEEN ? AND ?");
+        $query->bind_param('sss',$end_user, $date1, $date2);
+        $query->execute();
+      }
+      if(!isset($_SESSION['end_user']) && isset($_SESSION['date1']) && isset($_SESSION['date2'])){
+        $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+        FROM ppei 
+        INNER JOIN classification ON classification.id = ppei.classification_id 
+        INNER JOIN offices ON offices.id = ppei.where_about 
+        AND remarks !='Good Order and Condition' 
+        AND ppei.acquisition_date BETWEEN ? AND ?");
+        $query->bind_param('ss',$date1, $date2);
+        $query->execute();
+      }
+      if(isset($_SESSION['end_user']) && !isset($_SESSION['date1']) && !isset($_SESSION['date2'])){
+        $query = $DB->prepare("SELECT ppei.*, classification.class_name AS class_name, SUBSTRING(offices.office_abbr, LOCATE('-', offices.office_abbr) + 1) AS office_abbr 
+        FROM ppei 
+        INNER JOIN classification ON classification.id = ppei.classification_id 
+        INNER JOIN offices ON offices.id = ppei.where_about 
+        AND remarks !='Good Order and Condition' 
+        AND ppei.end_user = ?");
+        $query->bind_param('s', $end_user);
+        $query->execute();
+      }
       
       $query->execute();
       $result = $query->get_result();
@@ -253,9 +219,9 @@ ob_start();
   </tbody>
   <tfoot>
     <tr>
-        <td class="none" style="text-align: left;" colspan="9">I HEREBY request inspection and disposition, pursuant to Section 79 of PD 1445, of the property and inumerated above.</td>
-        <td class="none" colspan="5">I CERTIFY that I have inspected each and every article enumerated in this report , and that the disposition made therefor was, in my judgement, the best for the public interest.</td>
-        <td class="none" style="text-align: left;" colspan="4">I CERTIFY that I have witnessed the disposition of the articles enumerated on this report this ____ day of _________, </td>
+        <td class="none" style="text-align: left;" colspan="10">I HEREBY request inspection and disposition, pursuant to Section 79 of PD 1445, of the property and inumerated above.</td>
+        <td class="none" colspan="6">I CERTIFY that I have inspected each and every article enumerated in this report , and that the disposition made therefor was, in my judgement, the best for the public interest.</td>
+        <td class="none" style="text-align: left;" colspan="5">I CERTIFY that I have witnessed the disposition of the articles enumerated on this report this ____ day of _________, </td>
     </tr>
     <tr>
         <td class="none">Requested by:</td>
@@ -268,8 +234,8 @@ ob_start();
         <td class="none" colspan="4">____________________________________________________<br>(Signature over Printed Name of Authorize Official)</td>
         <td class="none" colspan="2"></td>
 
-        <td class="none" colspan="5" style="text-align: center;" >____________________________________________________<br>(Signature over Printed Name of Inspection Officer)</td>
-        <td class="none" colspan="4" style="text-align: center;" >____________________________________________________<br>(Signature over Printed Name of Witness)</td>
+        <td class="none" colspan="6" style="text-align: center;" >____________________________________________________<br>(Signature over Printed Name of Inspection Officer)</td>
+        <td class="none" colspan="5" style="text-align: center;" >____________________________________________________<br>(Signature over Printed Name of Witness)</td>
         
     </tr>
     <tr>

@@ -44,33 +44,20 @@
                                             </div>
                                         </div>
                                         <?php 
-                                            if(!isset($_SESSION['category_id1'])){
-                                                $category_id = "";
-                                            }
-                                            if(isset($_SESSION['category_id1'])){
-                                                $category_id = $_SESSION['category_id1'];
-                                            }
-                                            
-                                            if(!isset($_SESSION['acquisition_date1'])){
-                                                $acquisition_date1 = "";
-                                            }
-                                            if(isset($_SESSION['acquisition_date1'])){
-                                                $acquisition_date1 = $_SESSION['acquisition_date1'];
-                                            }
 
-                                            if(!isset($_SESSION['where_about1'])){
-                                                $where_about1 = "";
-                                            }
-                                            if(isset($_SESSION['where_about1'])){
-                                                $where_about1 = $_SESSION['where_about1'];
-                                            }
+                                        if(!isset($_SESSION['acquisition_date1'])){
+                                            $acquisition_date1 = "";
+                                        }
+                                        if(isset($_SESSION['acquisition_date1'])){
+                                            $acquisition_date1 = $_SESSION['acquisition_date1'];
+                                        }
 
-                                            if(!isset($_SESSION['end_user1'])){
-                                                $end_user1 = "";
-                                            }
-                                            if(isset($_SESSION['end_user1'])){
-                                                $end_user1 = $_SESSION['end_user1'];
-                                            }
+                                        if(!isset($_SESSION['end_user1'])){
+                                            $end_user1 = "";
+                                        }
+                                        if(isset($_SESSION['end_user1'])){
+                                            $end_user1 = $_SESSION['end_user1'];
+                                        }
 
                                         ?>
                                         <div class="col-md-10">
@@ -78,7 +65,8 @@
                                                 <form method="POST">
                                                 <input type="hidden" name="action" value="set_session_return">
                                                     <div class="form-row">
-                                                        <div class="col-sm-2">
+
+                                                        <div class="col-sm-2" hidden>
                                                             <?php
                                                                 $stmt = $DB->prepare("SELECT id, SUBSTRING(office_abbr, LOCATE('-', office_abbr) + 1) FROM offices ");
                                                                 $stmt->execute();
@@ -107,20 +95,20 @@
                                                                 </select>
                                                             <?php  $stmt->close(); ?>
                                                         </div>
-                                                                    
+
                                                         <div class="col-sm-2">
-                                                            <input type="date" name="date1" value="<?php echo isset($_POST['date1']) ? $_POST['date1'] : ''; ?>"  class="form-control">
+                                                            <input type="date" name="date1" id="date1"  onchange="dateOne(this.value)"  value="<?php echo isset($_SESSION['date11']) ? $_SESSION['date11'] : ''; ?>"class="form-control">
                                                         </div>
 
                                                         <div class="col-sm-2">
-                                                            <input type="date" name="date2" value="<?php echo isset($_POST['date2']) ? $_POST['date2'] : ''; ?>"  class="form-control">
+                                                            <input type="date" name="date2" id="date2" onchange="dateTwo(this.value)"  value="<?php echo isset($_SESSION['date22']) ? $_SESSION['date22'] : ''; ?>"  class="form-control">
                                                         </div>
 
                                                         <div class="col-sm-2 btn-group">
-                                                            <button type="submit" name="btn-setsessions" class="btn btn-app1">
+                                                            <button type="submit" name="btn-setsessions-return" class="btn btn-app1">
                                                                 <i class="fas fa-search" style="color: #fff"></i> Search
                                                             </button>
-                                                            <a href="./pdf2" target="_blank" class="btn btn-app1">
+                                                            <a href="./pdf2" target="_blank" class="btn btn-app1" id="print-link" style="pointer-events: <?php echo isset($_SESSION['end_user1']) ? 'auto' : 'none'; ?>;">
                                                                 <i class="fas fa-print" style="color: #fff"></i> Print
                                                             </a>
                                                         </div>
@@ -129,9 +117,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    
-                                    
                                 </div>
                                 <!-- /.card-header -->
                                 <?= show_message(); ?>
@@ -194,6 +179,7 @@
                                 <option>Destroyed</option>
                                 <option>Damaged</option>
                                 <option>Lost</option>
+                                <option value="">Good Order and Condition</option>
                                 <option value="0">Others</option>
                                 </select>
                             </div>
@@ -234,9 +220,21 @@
         
 <script src="AjaxDatatables/jquery.min.js"></script>
 <script src="AjaxDatatables/datatables.min.js"></script>
-
 <?= element( 'footer' ); ?>
+<script>  
+    function dateOne(val){
+        document.getElementById("date2").value=val;
+        var date2 = document.getElementById("date2");
+        date2.min = val;
+    }
 
+    function dateTwo(val){
+        var date1 = document.getElementById("date1").value;
+        if(date1 == ""){
+            document.getElementById("date1").value=val;
+        }
+    }
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#example').DataTable({

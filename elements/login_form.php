@@ -36,10 +36,21 @@
             -webkit-animation: showSlowlyElement 700ms !important; 
             animation: showSlowlyElement 700ms !important;
         }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #b0bbc7;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 50% 50%;
+            /*z-index: -1;*/
+        }
     </style>
 
 </head>
 <body class="hold-transition login-page">
+    <div id="particles-js"></div>
     <div class="login-box">
     
         <div class="card">
@@ -91,6 +102,9 @@
         </div>
     </div>
     
+    <!-- Particles -->
+    <script src="assets/particles/particles.js"></script>
+    <script src="assets/particles/app.js"></script>
     <!-- jQuery -->
     <script src="assets/adminLTE-3/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->

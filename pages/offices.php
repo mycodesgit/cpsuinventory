@@ -28,17 +28,59 @@
                 <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-4">
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">
-                                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-office" style="background-color: #3c8dbc;">
-                                            <i class="fas fa-plus"></i> Add Office
-                                        </button>
+                                        Office
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                <form class="form-horizontal" method="post" id="addOffice" name="office-form" enctype="multipart/form-data">  
+                                    <input type="hidden" name="action" value="add_office"> 
+
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <input type="text" name="office_name" oninput="this.value = this.value.toUpperCase()" placeholder="Enter Office" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <label for="exampleInputName">Office Abbreviation:</label>
+                                                <input type="text" name="office_abbr" oninput="this.value = this.value.toUpperCase()" placeholder="Enter Office Abbreviation" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" name="btn-submit" class="btn btn-primary">
+                                                    <i class="fas fa-save"></i> Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        List 
                                     </h3>
                                 </div>
                                 <!-- /.card-header -->
-                                <?= show_message(); ?>
+                                <?= show_message(); unset_message(); ?>
                                 <!-- Modal -->
                                 <?php include 'pages/modal/add-office-modal.php';?>
                                 <!-- /End Modal -->
@@ -62,7 +104,7 @@
                                                     if ($result->num_rows > 0) {
                                                         $cnt = 1;
                                                         while ($office = $result->fetch_object()) { ?>
-                                                        <tr>
+                                                        <tr id="tr-<?php echo $office->id ?>">
                                                             <td><?php echo $cnt ?></td>
                                                             <td><?php echo $office->office_name ?></td>
                                                             <td><?php echo $office->office_abbr ?></td>
@@ -128,7 +170,10 @@
                         'Your file has been deleted.',
                         'success'
                       ).then(() => {
-                            location.reload(); // Reload the page after successful deletion
+                            var row = $("#tr-" + id);
+                            row.fadeOut(1000, function() {
+                                row.remove();
+                            });
                         });
                     }
                 });

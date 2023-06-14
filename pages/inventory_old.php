@@ -332,7 +332,7 @@
             </div>
             
             <div class="modal-body">
-            <form class="form-horizontal" method="post" id="" enctype="multipart/form-data">  
+                <form class="form-horizontal" method="post" id="" enctype="multipart/form-data">  
                     <input type="hidden" name="action" value="update_remarks"> 
                     <input type="hidden" id="remarks-token" name="token" value="<?php echo $item->token ?>"> 
                     <div class="form-group">

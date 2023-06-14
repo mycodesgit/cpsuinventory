@@ -23,6 +23,11 @@ function show_message() {
 	}
 }
 
+function unset_message() {
+    unset($_SESSION['MESSAGE']);
+    unset($_SESSION['MESSAGE_TYPE']);
+}
+
 function redirect( $page = "dashboard", $q = "" ) {
 	header( "Location: " . SITE_URL . "/$page" . ( !empty( $q ) ? '&' . $q : '' ) );
 	exit;

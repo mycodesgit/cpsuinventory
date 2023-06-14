@@ -48,25 +48,12 @@
                                             </div>
                                         </div>
                                         <?php 
-                                        if(!isset($_SESSION['category_id'])){
-                                            $category_id = "";
-                                        }
-                                        if(isset($_SESSION['category_id'])){
-                                            $category_id = $_SESSION['category_id'];
-                                        }
                                         
                                         if(!isset($_SESSION['acquisition_date'])){
                                             $acquisition_date1 = "";
                                         }
                                         if(isset($_SESSION['acquisition_date'])){
                                             $acquisition_date1 = $_SESSION['acquisition_date'];
-                                        }
-
-                                        if(!isset($_SESSION['where_about'])){
-                                            $where_about1 = "";
-                                        }
-                                        if(isset($_SESSION['where_about'])){
-                                            $where_about1 = $_SESSION['where_about'];
                                         }
 
                                         if(!isset($_SESSION['end_user'])){
@@ -83,7 +70,7 @@
                                                 <input type="hidden" name="action" value="set_session">
                                                     <div class="form-row">
 
-                                                        <div class="col-sm-2">
+                                                        <div class="col-sm-2" hidden>
                                                             <?php
                                                                 $stmt = $DB->prepare("SELECT id, SUBSTRING(office_abbr, LOCATE('-', office_abbr) + 1) FROM offices ");
                                                                 $stmt->execute();
@@ -104,7 +91,7 @@
                                                                 $stmt->execute();
                                                                 $stmt->bind_result($end_user);
                                                             ?>
-                                                                <select name="end_user" id="end-user" class="form-control select2">
+                                                                <select name="end_user" id="end-user" class="form-control select2" onchange="endUser(this.value)">
                                                                     <option value="">Select All </option>
                                                                     <?php while ($stmt->fetch()) { ?>
                                                                         <option value="<?php echo $end_user ?>" <?php if($end_user == $end_user1){ echo "selected"; }?>><?php echo $end_user ?></option>
@@ -114,18 +101,18 @@
                                                         </div>
 
                                                         <div class="col-sm-2">
-                                                            <input type="date" name="date1" value="<?php echo isset($_POST['date1']) ? $_POST['date1'] : ''; ?>"  class="form-control">
+                                                            <input type="date" name="date1" id="date1"  onchange="dateOne(this.value)"  value="<?php echo isset($_SESSION['date1']) ? $_POST['date1'] : ''; ?>"class="form-control">
                                                         </div>
 
                                                         <div class="col-sm-2">
-                                                            <input type="date" name="date2" value="<?php echo isset($_POST['date2']) ? $_POST['date2'] : ''; ?>"  class="form-control">
+                                                            <input type="date" name="date2" id="date2" onchange="dateTwo(this.value)"  value="<?php echo isset($_SESSION['date2']) ? $_POST['date2'] : ''; ?>"  class="form-control">
                                                         </div>
 
                                                         <div class="col-sm-2 btn-group">
                                                             <button type="submit" name="btn-setsessions" class="btn btn-app1">
                                                                 <i class="fas fa-search" style="color: #fff"></i> Search
                                                             </button>
-                                                            <a href="./pdf1" target="_blank" class="btn btn-app1">
+                                                            <a href="./pdf1" target="_blank" class="btn btn-app1" id="print-link" style="pointer-events: <?php echo isset($_SESSION['end_user']) ? 'auto' : 'none'; ?>;">
                                                                 <i class="fas fa-print" style="color: #fff"></i> Print
                                                             </a>
                                                         </div>
@@ -134,8 +121,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    
                                     
                                 </div>
                                 <!-- /.card-header -->
@@ -303,13 +288,26 @@
 <script src="AjaxDatatables/datatables.min.js"></script>
 
 <?= element( 'footer' ); ?>
+<script>  
+    function dateOne(val){
+        document.getElementById("date2").value=val;
+        var date2 = document.getElementById("date2");
+        date2.min = val;
+    }
 
+    function dateTwo(val){
+        var date1 = document.getElementById("date1").value;
+        if(date1 == ""){
+            document.getElementById("date1").value=val;
+        }
+    }
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#example').DataTable({
+        var dataTable = $('#example').DataTable({
             ajax: {
-                url: 'pages/AjaxDatatables/inventory_data.php', // Replace with the endpoint URL to fetch data from the database
-                dataSrc: 'data' // Property name in the response object that contains the data array
+                url: 'pages/AjaxDatatables/inventory_data.php',
+                dataSrc: 'data'
             },
             columns: [
                 { data: 'no' },
@@ -325,14 +323,19 @@
                 { data: 'remarks'},
                 { data: 'action'}
             ],
-            // Customizing the DataTables appearance
-            responsive: true, // Enable responsive design
-            lengthChange: true, // Disable the ability to change the number of entries shown
-            searching: true, // Enable search functionality
-            ordering: true, // Enable column sorting
-            paging: true // Enable pagination
+            responsive: true,
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            paging: true
         });
+
+        // Refresh the DataTable every 5 seconds
+        setInterval(function() {
+            dataTable.ajax.reload(null, false);
+        }, 2000);
     });
+
 
     setTimeout(function () {
         $( "#alert" ).delay(2500).fadeOut(5000);
@@ -406,4 +409,5 @@
             $("#other-remarks").val("");
         }
     }
+
 </script>

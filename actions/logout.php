@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 if (isset($_SESSION[AUTH_ID])) {
     $stmt = $DB->prepare("UPDATE users SET log_status = 0 WHERE id = ?");
     $stmt->bind_param("i", $_SESSION[AUTH_ID]);

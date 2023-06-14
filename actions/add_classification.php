@@ -19,7 +19,7 @@ if (isset($_POST['btn-submit'])) {
         $token = bin2hex(random_bytes(16));
 
         if (!empty($class_name) && !empty($class_code)) {
-
+            
             $sql_insert = "INSERT INTO classification SET class_name=?, class_code=?, token=?";
 
             $stmt_insert = $DB->prepare($sql_insert);
