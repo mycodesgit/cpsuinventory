@@ -2,6 +2,12 @@
 
 <?= element( 'header' ); ?>
 
+<style>
+    .badge{
+        font-size: 9pt;
+    }
+</style>
+
 <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -32,6 +38,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">
+                                        <i class="fas fa-desktop"></i> PPEI Logs
                                     </h3>
                                 </div>
                                 <!-- /.card-header -->
@@ -47,8 +54,8 @@
                                                 <tr>
                                                     <th>No.</th>
                                                     <th>Item</th>
-                                                    <th>Remarks</th>
-                                                    <th>Date</th>
+                                                    <th class="text-center">Remarks</th>
+                                                    <th class="text-center">Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -69,7 +76,7 @@
                                                             <td>
                                                                 <?php echo $logs->description; ?>
                                                             </td>
-                                                            <td>
+                                                            <td class="text-center">
                                                                 <?php
                                                                     if($logs->action == "in"){
                                                                         echo"Item Inserted By $logs->fname  $logs->lname";
@@ -82,8 +89,10 @@
                                                                     }
                                                                 ?>
                                                             </td>
-                                                            <td>
-                                                                <?php echo $logs->created_at; ?>
+                                                            <td class="text-center">
+                                                                <span class="badge badge-secondary">
+                                                                <?php $timeLog = $logs->created_at; print date("M d, Y - D h:i A", strtotime($timeLog)) ?>
+                                                                </span>
                                                             </td>
                                                         </tr>
                                                         <?php

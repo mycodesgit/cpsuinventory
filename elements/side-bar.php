@@ -46,7 +46,9 @@
         </li>
 
         <?php if($_SESSION['usertype'] == 'Administrator') {?>
-        <li class="nav-header">Users Management</li>
+
+        <li class="nav-header">Users & Logs Management</li>
+
         <li class="nav-item">
             <a href="./users" class="nav-link <?php echo basename($_SERVER['REQUEST_URI']) == 'users' ? 'active' : ''; ?>">
                 <i class="nav-icon fas fa-users"></i>
