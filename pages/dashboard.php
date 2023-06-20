@@ -33,15 +33,15 @@
                             <div class="small-box bg-info">
                                 <div class="inner">
                                     <?php
-                                        $result = $DB->query("SELECT COUNT(*) AS cat_count FROM category")->fetch_array();
+                                        $result = $DB->query("SELECT COUNT(*) AS off_count FROM offices")->fetch_array();
                                     ?>
-                                    <h3><?php echo ($result['cat_count']);?></h3>
-                                    <p>ICT Category</p>
+                                    <h3><?php echo ($result['off_count']);?></h3>
+                                    <p>Offices</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-layer-group"></i>
                                 </div>
-                                <a href="./?page=ict-category" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="./offices" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
@@ -58,7 +58,7 @@
                                 <div class="icon">
                                     <i class="fa fa-list-alt"></i>
                                 </div>
-                                <a href="./?page=offices" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="./classification" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
@@ -75,7 +75,7 @@
                                 <div class="icon">
                                     <i class="fa fa-desktop"></i>
                                 </div>
-                                <a href="./?page=ict-equip-monitoring" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="./inventory" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
@@ -92,7 +92,7 @@
                                 <div class="icon">
                                     <i class="fa fa-users"></i>
                                 </div>
-                                <a href="./?page=users" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="./users" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
