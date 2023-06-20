@@ -53,6 +53,12 @@
                 <p>Users</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="./logs" class="nav-link <?php echo basename($_SERVER['REQUEST_URI']) == 'logs' ? 'active' : ''; ?>">
+                <i class="nav-icon fas fa-clipboard"></i>
+                <p>Logs</p>
+            </a>
+        </li>
         <?php }?>
     </ul>
 </nav>

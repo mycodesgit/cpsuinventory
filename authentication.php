@@ -47,7 +47,8 @@
 						"pdf3", 
 						"returned", 
 						"import", 
-						"error-log"
+						"error-log",
+						"logs"
 					];
 	$restricted_pages[ 'Administrator' ][ 'default_page' ] = "dashboard";
 

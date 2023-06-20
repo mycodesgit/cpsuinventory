@@ -187,6 +187,7 @@
                                 <option>Destroyed</option>
                                 <option>Damaged</option>
                                 <option>Lost</option>
+                                <option>Good Order and Condition</option>
                                 <option value="0">Others</option>
                                 </select>
                             </div>

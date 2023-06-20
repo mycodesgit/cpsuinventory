@@ -67,7 +67,7 @@
                             <div class="small-box bg-green">
                                 <div class="inner">
                                     <?php
-                                        $result = $DB->query("SELECT COUNT(*) AS item_count FROM ppei")->fetch_array();
+                                        $result = $DB->query("SELECT COUNT(*) AS item_count FROM ppei WHERE statdel != 0")->fetch_array();
                                     ?>
                                     <h3><?php echo ($result['item_count']);?></h3>
                                     <p>PPEI</p>

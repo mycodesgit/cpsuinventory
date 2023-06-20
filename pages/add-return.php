@@ -109,8 +109,19 @@
                                             ?>
 
                                             <div class="col-md-4">
-                                                <label for="exampleInputName">End User:</label>
-                                                <input type="text" name="end_user" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" class="form-control" placeholder="Enter End">
+                                            <label for="exampleInputName">End User:</label>
+                                            <input type="text" name="end_user" class="form-control" placeholder="Enter End" list="endUserOptions" oninput="filterEndUserOptions(this)">
+                                            <datalist id="endUserOptions">
+                                            <?php
+                                                $stmt = $DB->prepare("SELECT DISTINCT end_user FROM ppei");
+                                                $stmt->execute();
+                                                $stmt->bind_result($end_user);
+                                                while ($stmt->fetch()) {
+                                                    echo "<option value='$end_user'></option>";
+                                                }
+                                                $stmt->close();
+                                            ?>
+                                            </datalist>
                                             </div>
 
                                             <?php

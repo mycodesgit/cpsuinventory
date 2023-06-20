@@ -4,6 +4,7 @@ if (!defined('ACCESS')) {
 }
 
 if (isset($_POST['btn-update-ppei'])) {
+    $id = $_POST['id'];
     $token = $_POST['token'];
     $property_no = $_POST['property_no'];
     $qty = $_POST['qty'];
@@ -27,8 +28,11 @@ if (isset($_POST['btn-update-ppei'])) {
 
     $stmt_insert = $DB->prepare($sql_insert);
     $stmt_insert->bind_param("sisssisssssss", $property_no, $qty, $description, $acquisition_date, $unit, $unit_value, $classification_id, $end_user, $where_about, $serial_no, $specification, $remarks, $token);
+    $stmt_insert->execute();
+    if($stmt_insert) {
+        $userid = $_SESSION['id'];
 
-    if ($stmt_insert->execute()) {
+        $sql_insert1 =mysqli_query($DB,"INSERT INTO logs (user_id, ppei_id, action, created_at) VALUES ($userid, $id, 'upt', NOW())");
         set_message("<i class='fa fa-check'></i> Update Successfully", 'success');
     } else {
         set_message("<i class='fa fa-times'></i> Failed to Add" . $DB->error, 'danger');

@@ -50,6 +50,7 @@
                             <div class="card-body">        
                                 <form class="form-horizontal" method="post" enctype="multipart/form-data" id="addInventory">  
                                     <input type="hidden" name="action" value="update_ppei">
+                                    <input type="hidden" name="id" value="<?php echo $item->id ?>">
                                     <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
                                     <div class="form-group">
                                         <div class="form-row">

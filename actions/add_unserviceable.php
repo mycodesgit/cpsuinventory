@@ -40,6 +40,10 @@ if (isset($_POST['btn-submit'])) {
             $stmt_insert->bind_param("sisssisssssss", $property_no, $qty, $description, $acquisition_date, $unit, $unit_value, $classification_id, $end_user, $where_about, $serial_no, $specification, $remarks, $token);
 
             if($stmt_insert->execute()){
+                $inserted_id = $stmt_insert->insert_id;
+                $userid = $_SESSION['id'];
+    
+                $sql_insert1 =mysqli_query($DB,"INSERT INTO logs (user_id, ppei_id, action, created_at) VALUES ($userid, $inserted_id, 'in', NOW())");
                 set_message("<i class='fa fa-check'></i> Added Successfully",  'success');
             } else {
                 set_message("<i class='fa fa-times'></i> Failed to Add" .$DB->error, 'danger');

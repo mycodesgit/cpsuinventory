@@ -40,7 +40,7 @@ if (!isset($_SESSION['end_user1']) && !isset($_SESSION['date11']) && !isset($_SE
     FROM ppei 
     INNER JOIN classification ON classification.id = ppei.classification_id 
     INNER JOIN offices ON offices.id = ppei.where_about 
-    AND remarks !='Good Order and Condition'
+    AND remarks !='Good Order and Condition' AND statdel = 1
     ORDER BY (remarks = 'Good Order and Condition') DESC, remarks ASC");
     $query->execute();
 }
@@ -49,7 +49,7 @@ if (isset($_SESSION['end_user1']) && isset($_SESSION['date11']) && isset($_SESSI
     FROM ppei 
     INNER JOIN classification ON classification.id = ppei.classification_id 
     INNER JOIN offices ON offices.id = ppei.where_about 
-    AND remarks !='Good Order and Condition'AND ppei.end_user = ?
+    AND remarks !='Good Order and Condition' AND statdel = 1AND ppei.end_user = ?
     AND ppei.acquisition_date BETWEEN ? AND ?");
     $query->bind_param('sss',$end_user, $date1, $date2);
     $query->execute();
@@ -59,7 +59,7 @@ if(!isset($_SESSION['end_user1']) && isset($_SESSION['date11']) && isset($_SESSI
     FROM ppei 
     INNER JOIN classification ON classification.id = ppei.classification_id 
     INNER JOIN offices ON offices.id = ppei.where_about 
-    AND remarks !='Good Order and Condition' 
+    AND remarks !='Good Order and Condition' AND statdel = 1 
     AND ppei.acquisition_date BETWEEN ? AND ?");
     $query->bind_param('ss',$date1, $date2);
     $query->execute();
@@ -69,7 +69,7 @@ if(isset($_SESSION['end_user1']) && !isset($_SESSION['date11']) && !isset($_SESS
     FROM ppei 
     INNER JOIN classification ON classification.id = ppei.classification_id 
     INNER JOIN offices ON offices.id = ppei.where_about 
-    AND remarks !='Good Order and Condition' 
+    AND remarks !='Good Order and Condition' AND statdel = 1 
     AND ppei.end_user = ?");
     $query->bind_param('s', $end_user);
     $query->execute();
